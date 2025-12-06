@@ -14,4 +14,11 @@ abstract class LibraryItem {
         isBorrowed = false;
         System.out.println(title + " returned successfully.");
     }
+
+    public void borrowItem() throws ItemNotAvailableException {
+        if (isBorrowed) {
+            throw new ItemNotAvailableException(title + " is already borrowed!");
+        }
+        isBorrowed = true;
+    }
 }
