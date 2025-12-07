@@ -1,11 +1,10 @@
-
 import java.util.Scanner;
 
-public class Library {
+public class Library{
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        LibraryItem[] items = new LibraryItem[100]; // allow up to 100 items
+        LibraryItem[] items = new LibraryItem[100]; // max 100 items
         int count = 0;
 
         while (true) {
@@ -73,24 +72,24 @@ public class Library {
         }
     }
 
-    // Read a valid integer
+    // Input validation for integers
     private static int getValidInt(Scanner sc, String prompt) {
         int num;
         while (true) {
             System.out.print(prompt);
             if (sc.hasNextInt()) {
                 num = sc.nextInt();
-                sc.nextLine(); // consume leftover newline
+                sc.nextLine(); // consume newline
                 break;
             } else {
                 System.out.println("Invalid input. Please enter an integer.");
-                sc.nextLine(); // discard invalid input
+                sc.nextLine(); // discard invalid
             }
         }
         return num;
     }
 
-    // Get a unique ID (no duplicates allowed)
+    // Ensure unique ID
     private static int getUniqueId(Scanner sc, LibraryItem[] items, int count) {
         int id;
         while (true) {
@@ -108,14 +107,13 @@ public class Library {
         return id;
     }
 
-    // Borrow item by ID only
+    // Borrow item by ID
     private static void borrowItem(LibraryItem[] items, int count, Scanner sc) {
         int id = getValidInt(sc, "Enter ID to borrow: ");
         for (int i = 0; i < count; i++) {
             if (items[i].id == id) {
                 try {
                     ((Borrowable) items[i]).borrow();
-                    System.out.println(items[i].getClass().getSimpleName() + " borrowed successfully.");
                 } catch (ItemNotAvailableException e) {
                     System.out.println(e.getMessage());
                 }
@@ -125,20 +123,15 @@ public class Library {
         System.out.println("Item not found.");
     }
 
-    // Return item by ID only
-   private static void returnItem(LibraryItem[] items, int count, Scanner sc) {
-    int id = getValidInt(sc, "Enter ID to return: ");
-    for (int i = 0; i < count; i++) {
-        if (items[i].id == id) {
-            if (items[i].isBorrowed) { // check if actually borrowed
+    // Return item by ID
+    private static void returnItem(LibraryItem[] items, int count, Scanner sc) {
+        int id = getValidInt(sc, "Enter ID to return: ");
+        for (int i = 0; i < count; i++) {
+            if (items[i].id == id) {
                 ((Borrowable) items[i]).returnItem();
-                System.out.println(items[i].getClass().getSimpleName() + " returned successfully.");
-            } else {
-                System.out.println("Item was not borrowed, cannot return.");
+                return;
             }
-            return;
         }
+        System.out.println("Item not found.");
     }
-    System.out.println("Item not found.");
-}
 }
