@@ -1,68 +1,45 @@
 import java.util.Scanner;
 
-public class Library{
+public class Library {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         LibraryItem[] items = new LibraryItem[100]; // max 100 items
         int count = 0;
 
+        // Predefined items
+        items[count++] = new Book(1, "The Hobbit", "J.R.R. Tolkien");
+        items[count++] = new Book(2, "1984", "George Orwell");
+        items[count++] = new Magazine(3, "Science Weekly", 58);
+        items[count++] = new Magazine(4, "Tech Today", 12);
+        items[count++] = new Comic(5, "Spider-Man", "Steve Ditko");
+        items[count++] = new Comic(6, "Batman", "Bob Kane");
+
         while (true) {
             System.out.println("\n--- Library Menu ---");
-            System.out.println("1. Add Book");
-            System.out.println("2. Add Magazine");
-            System.out.println("3. Add Comic");
-            System.out.println("4. Display All Items");
-            System.out.println("5. Borrow Item");
-            System.out.println("6. Return Item");
-            System.out.println("7. Exit");
+            System.out.println("1. Display All Items");
+            System.out.println("2. Borrow Item");
+            System.out.println("3. Return Item");
+            System.out.println("4. Exit");
+
             int choice = getValidInt(sc, "Choose option: ");
 
             switch (choice) {
                 case 1:
-                    int bId = getUniqueId(sc, items, count);
-                    System.out.print("Enter Title: ");
-                    String bTitle = sc.nextLine();
-                    System.out.print("Enter Author: ");
-                    String author = sc.nextLine();
-                    items[count++] = new Book(bId, bTitle, author);
-                    System.out.println("Book added.");
-                    break;
-
-                case 2:
-                    int mId = getUniqueId(sc, items, count);
-                    System.out.print("Enter Title: ");
-                    String mTitle = sc.nextLine();
-                    int issue = getValidInt(sc, "Enter Issue Number: ");
-                    items[count++] = new Magazine(mId, mTitle, issue);
-                    System.out.println("Magazine added.");
-                    break;
-
-                case 3:
-                    int cId = getUniqueId(sc, items, count);
-                    System.out.print("Enter Title: ");
-                    String cTitle = sc.nextLine();
-                    System.out.print("Enter Illustrator: ");
-                    String illustrator = sc.nextLine();
-                    items[count++] = new Comic(cId, cTitle, illustrator);
-                    System.out.println("Comic added.");
-                    break;
-
-                case 4:
                     System.out.println("\n--- All Items ---");
                     for (int i = 0; i < count; i++)
                         items[i].displayInfo();
                     break;
 
-                case 5:
+                case 2:
                     borrowItem(items, count, sc);
                     break;
 
-                case 6:
+                case 3:
                     returnItem(items, count, sc);
                     break;
 
-                case 7:
+                case 4:
                     System.out.println("Exiting...");
                     return;
 
@@ -87,24 +64,6 @@ public class Library{
             }
         }
         return num;
-    }
-
-    // Ensure unique ID
-    private static int getUniqueId(Scanner sc, LibraryItem[] items, int count) {
-        int id;
-        while (true) {
-            id = getValidInt(sc, "Enter ID: ");
-            boolean exists = false;
-            for (int i = 0; i < count; i++) {
-                if (items[i].id == id) {
-                    exists = true;
-                    break;
-                }
-            }
-            if (!exists) break;
-            System.out.println("ID already exists. Please enter a unique ID.");
-        }
-        return id;
     }
 
     // Borrow item by ID
