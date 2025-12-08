@@ -7,13 +7,13 @@ public class Library {
         LibraryItem[] items = new LibraryItem[100]; // max 100 items
         int count = 0;
 
-        // Predefined items
-        items[count++] = new Book(1, "The Hobbit", "J.R.R. Tolkien");
+       
+        items[count++] = new Book(1, "Eragon", "Christopher Paolini");
         items[count++] = new Book(2, "1984", "George Orwell");
         items[count++] = new Magazine(3, "Science Weekly", 58);
         items[count++] = new Magazine(4, "Tech Today", 12);
-        items[count++] = new Comic(5, "Spider-Man", "Steve Ditko");
-        items[count++] = new Comic(6, "Batman", "Bob Kane");
+        items[count++] = new Comic(5, "The Moon", "Akayama");
+        items[count++] = new Comic(6, "Batman", "Bill Finger");
 
         while (true) {
             System.out.println("\n--- Library Menu ---");
